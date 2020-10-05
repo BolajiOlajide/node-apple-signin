@@ -19,12 +19,8 @@ const getAuthorizationUrl = (options = {}) => {
   url.searchParams.append('state', options.state || 'state');
   url.searchParams.append('client_id', options.clientID);
   url.searchParams.append('redirect_uri', options.redirectUri);
-
-  if (options.scope){
-    url.searchParams.append('scope', 'openid ' + options.scope);
-  } else {
-    url.searchParams.append('scope', 'openid');
-  }
+  url.searchParams.append('response_mode', options.response_mode || 'form_post');
+  url.searchParams.append('scope',  options.scope || DEFAULT_SCOPE);
 
   return url.toString();
 };
