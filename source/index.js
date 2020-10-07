@@ -20,7 +20,9 @@ const getAuthorizationUrl = (options = {}) => {
   url.searchParams.append('client_id', options.clientID);
   url.searchParams.append('redirect_uri', options.redirectUri);
   url.searchParams.append('response_mode', options.response_mode || 'form_post');
-  url.searchParams.append('scope',  options.scope || DEFAULT_SCOPE);
+  if (options.scope) {
+    url.searchParams.append('scope',  options.scope || DEFAULT_SCOPE);
+  }
 
   return url.toString();
 };
