@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken';
 
 import { ENDPOINT_URL, TOKEN_ISSUER } from './constants';
 
-import type { RefreshAuthOptions } from './types';
+import type { RefreshAuthOptions } from '../@types';
 
 
 export const getApplePublicKey = async () => {

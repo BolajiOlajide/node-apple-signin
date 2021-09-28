@@ -1,7 +1,7 @@
 import { URL } from 'url';
 import fetch from 'node-fetch';
 
-import type { AuthUrlOptions, AuthTokenOptions } from './types';
+import type { AuthUrlOptions, AuthTokenOptions } from '../@types';
 
 import { ENDPOINT_URL, DEFAULT_SCOPE } from './constants';
 

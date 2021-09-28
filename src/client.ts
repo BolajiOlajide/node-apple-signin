@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 
-import type { ClientSecretOpts } from './types';
+import type { ClientSecretOpts } from '../@types';
 
 import { ENDPOINT_URL } from './constants';
 
