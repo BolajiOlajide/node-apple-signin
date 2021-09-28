@@ -14,16 +14,16 @@
     "authentication"
   ],
   "author": {
-    "name": "Artem Efremov",
-    "email": "efremov.artserg@gmail.com",
-    "url": "https://gotechmakers.com"
+    "name": "LogicAlley",
+    "email": "hello@logicalley.africa",
+    "url": "https://logicalley.africa"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/Techofficer/node-apple-signin.git"
+    "url": "git://github.com/logicalley/node-apple-signin.git"
   },
   "bugs": {
-    "url": "https://github.com/Techofficer/node-apple-signin/issues"
+    "url": "https://github.com/logicalley/node-apple-signin/issues"
   },
   "license": "MIT",
   "licenses": [
@@ -33,15 +33,15 @@
     }
   ],
   "dependencies": {
-    "jsonwebtoken": "^8.5.1",
-    "node-rsa": "^1.0.5",
-    "request": "^2.88.0",
-    "request-promise-native": "^1.0.7"
+    "jsonwebtoken": "8.5.1",
+    "node-rsa": "1.0.5",
+    "request": "2.88.0",
+    "request-promise-native": "1.0.7"
   },
   "main": "./source",
   "devDependencies": {
-    "eslint": "^5.16.0",
-    "eslint-config-airbnb-base": "^13.1.0",
-    "eslint-plugin-import": "^2.17.3"
+    "eslint": "5.16.0",
+    "eslint-config-airbnb-base": "13.1.0",
+    "eslint-plugin-import": "2.17.3"
   }
 }
