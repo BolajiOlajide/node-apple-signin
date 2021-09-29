@@ -7,7 +7,7 @@
     "test": "jest",
     "prepare": "yarn build",
     "prepublishOnly": "yarn test && yarn lint",
-    "lint": "eslint"
+    "lint": "eslint ."
   },
   "keywords": [
     "apple",
