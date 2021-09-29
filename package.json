@@ -1,6 +1,6 @@
 {
-  "name": "@logicalley/node-apple-signin",
-  "version": "0.0.1",
+  "name": "@bolajiolajide/node-apple-signin",
+  "version": "0.0.0",
   "description": "Node.JS wrapper around Sign In with Apple REST API",
   "scripts": {
     "build": "rm -rf dist && tsc",
@@ -18,13 +18,13 @@
     "authentication"
   ],
   "author": {
-    "name": "LogicAlley",
-    "email": "hello@logicalley.africa",
-    "url": "https://logicalley.africa"
+    "name": "Bolaji Olajide",
+    "email": "25608335+BolajiOlajide@users.noreply.github.com",
+    "url": "https://bolaji.de"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/logicalley/node-apple-signin.git"
+    "url": "git@github.com:logicalley/node-apple-signin.git"
   },
   "bugs": {
     "url": "https://github.com/logicalley/node-apple-signin/issues"
@@ -43,6 +43,8 @@
   },
   "main": "dist/index.js",
   "devDependencies": {
+    "@babel/preset-env": "^7.15.6",
+    "@babel/preset-typescript": "^7.15.0",
     "@types/jest": "^27.0.2",
     "@types/jsonwebtoken": "^8.5.5",
     "@types/node": "^16.10.1",
@@ -61,5 +63,12 @@
     "yarn.lock",
     "package.json",
     "@types/index.d.ts"
-  ]
+  ],
+  "contributors": [
+    {
+      "name": "Bolaji Olajide",
+      "url": "https://bolaji.de"
+    }
+  ],
+  "source": "./src/index.ts"
 }

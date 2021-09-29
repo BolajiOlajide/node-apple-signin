@@ -9,7 +9,7 @@ export const getClientSecret = (options: ClientSecretOpts): string => {
   if (!options.clientID) throw new Error('clientID is empty');
   if (!options.teamId) throw new Error('teamId is empty');
   if (!options.keyIdentifier) throw new Error('keyIdentifier is empty');
-  if (!options.key) throw new Error('key must be provided');
+  if (!options.key) throw new Error('key is empty');
 
   const timeNow = Math.floor(Date.now() / 1000);
 
@@ -22,6 +22,5 @@ export const getClientSecret = (options: ClientSecretOpts): string => {
   };
 
   const header = { alg: 'ES256', kid: options.keyIdentifier };
-  console.log('inside func', jwt.sign)
   return jwt.sign(claims, options.key, { algorithm: 'ES256', header });
 };
