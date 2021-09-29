@@ -22,6 +22,6 @@ export const getClientSecret = (options: ClientSecretOpts): string => {
   };
 
   const header = { alg: 'ES256', kid: options.keyIdentifier };
-
+  console.log('inside func', jwt.sign)
   return jwt.sign(claims, options.key, { algorithm: 'ES256', header });
 };
