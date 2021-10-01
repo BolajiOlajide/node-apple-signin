@@ -10,6 +10,10 @@ module.exports = {
   setupFilesAfterEnv: [
     '<rootDir>jest.setup.js',
   ],
+  transform: {
+    '^.+\\.(ts|tsx)?$': 'ts-jest',
+    '^.+\\.(js|jsx)$': 'babel-jest',
+  },
   globals: {
     'ts-jest': {
       babelConfig: true,

@@ -4,20 +4,27 @@ import jwt from 'jsonwebtoken';
 
 import { ENDPOINT_URL, TOKEN_ISSUER } from './constants';
 
-import type { RefreshAuthOptions } from '../@types';
+import type { RefreshAuthOptions, PublicKeysResponse } from '../@types';
 
 
-export const getApplePublicKey = async () => {
+export const getApplePublicKey = async (): Promise<string> => {
   const url = new URL(ENDPOINT_URL);
   url.pathname = '/auth/keys';
 
   const res = await fetch(url.toString());
-  const data = await res.json();
-  const [key] = data as Array<Record<string, string>>;
 
-  const pubKey = new NodeRSA();
-  pubKey.importKey({ n: Buffer.from(key.n, 'base64'), e: Buffer.from(key.e, 'base64') }, 'components-public');
-  return pubKey.exportKey('public');
+  if (res.ok) {
+    const data = await res.json();
+    const { keys } = data as PublicKeysResponse;
+    const [key] = keys;
+
+    const pubKey = new NodeRSA();
+    pubKey.importKey({ n: Buffer.from(key.n, 'base64'), e: Buffer.from(key.e, 'base64') }, 'components-public');
+    return pubKey.exportKey('public');
+  }
+
+  return Promise
+    .reject({ message: 'Response to get public key was unsuccessful' });
 };
 
 export const verifyIdToken = async (idToken: string, clientID: string): Promise<jwt.JwtPayload> => {

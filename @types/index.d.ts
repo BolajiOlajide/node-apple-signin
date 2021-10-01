@@ -24,3 +24,16 @@ export interface RefreshAuthOptions {
   clientID: string;
   clientSecret: string;
 }
+
+interface PubKey {
+  kty: string;
+  kid: string;
+  use: string;
+  alg: string;
+  n: string;
+  e: string;
+}
+
+export interface PublicKeysResponse {
+  keys: PubKey[];
+}
