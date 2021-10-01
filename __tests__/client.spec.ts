@@ -5,8 +5,6 @@ import { getClientSecret } from '../src/client';
 
 const sampleJwt = 'somer@nd0mt0k3n';
 
-jest.mock('jsonwebtoken');
-
 describe('client', () => {
   describe('getClientSecret', () => {
     const key = '----dskdsd---';
