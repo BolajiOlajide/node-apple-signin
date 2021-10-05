@@ -222,5 +222,42 @@ xwIDAQAB
         },
       )
     });
+
+    test('returns error message if API call is unsuccessful', async () => {
+      expect.assertions(3);
+
+      const errorObject = {
+        status: 'error',
+        meessage: 'dsdsdsd'
+      };
+
+      (fetch as jest.MockedFunction<typeof fetch>)
+        .mockResolvedValueOnce(
+          new Response(
+            JSON.stringify(errorObject),
+            { status: 400 },
+          ),
+        );
+      const url = new URL(ENDPOINT_URL);
+      url.pathname = '/auth/token';
+
+      await expect(TokenService.refreshAuthorizationToken(refreshToken, refreshTokenOpts))
+        .rejects
+        .toEqual(errorObject);
+      expect(fetch).toBeCalledTimes(1);
+      expect(fetch).toBeCalledWith(
+        url.toString(),
+        {
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' } ,
+          method: 'POST',
+          body: JSON.stringify({
+            client_id: refreshTokenOpts.clientID,
+            client_secret: refreshTokenOpts.clientSecret,
+            refresh_token: refreshToken,
+            grant_type: 'refresh_token',
+          })
+        },
+      )
+    });
   });
 });
