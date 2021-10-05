@@ -1,5 +1,6 @@
 /** @type {import('ts-jest/dist/types').InitialOptionsTsJest} */
 module.exports = {
+  testRegex: 'spec\\.ts$',
   verbose: true,
   preset: 'ts-jest',
   testEnvironment: 'node',

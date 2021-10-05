@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 
 import * as TokenService from '../src/token';
 import { ENDPOINT_URL, TOKEN_ISSUER } from '../src/constants';
-import { mockPublicKeyResponse } from '../src/fixtures/key.fixture';
+import { mockPublicKeyResponse } from './fixtures/key.fixture';
 
 
 const { Response } = jest.requireActual('node-fetch');
