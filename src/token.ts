@@ -80,5 +80,6 @@ export const refreshAuthorizationToken = async (refreshToken: string, options: R
     return res.json()
   }
 
-  return Promise.reject(res.json());
+  const errorMessage = await res.text();
+  return Promise.reject({ message: errorMessage });
 };
