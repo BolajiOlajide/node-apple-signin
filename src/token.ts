@@ -24,23 +24,39 @@ export const getApplePublicKey = async (): Promise<string> => {
   }
 
   return Promise
-    .reject({ message: 'Response to get public key was unsuccessful' });
+    .reject({ message: 'unable to fetch apple\'s public keys' });
 };
 
 export const verifyIdToken = async (idToken: string, clientID: string): Promise<jwt.JwtPayload> => {
   const applePublicKey = await getApplePublicKey();
   const jwtClaims = jwt.verify(idToken, applePublicKey, { algorithms: ['RS256'] }) as jwt.JwtPayload;
 
-  if (jwtClaims.iss !== TOKEN_ISSUER) throw new Error('id token not issued by correct OpenID provider - expected: ' + TOKEN_ISSUER + ' | from: ' + jwtClaims.iss);
-  if (clientID !== undefined && jwtClaims.aud !== clientID) throw new Error('aud parameter does not include this client - is: ' + jwtClaims.aud + '| expected: ' + clientID);
-  if (jwtClaims.exp && (jwtClaims.exp < (Date.now() / 1000))) throw new Error('id token has expired');
+  if (jwtClaims.iss !== TOKEN_ISSUER) {
+    const errorMessage = 'JWT issuer is invalid. Please provide JWT issued by Apple';
+    return Promise.reject({ message: errorMessage });
+  }
+
+  if (clientID !== undefined && jwtClaims.aud !== clientID) {
+    const errorMessage = 'JWT audience is invalid for this client';
+    return Promise.reject({ message: errorMessage });
+  }
+
+  const hasJWTExpired = jwtClaims.exp === undefined || jwtClaims.exp < (Date.now() / 1000);
+  if (hasJWTExpired) {
+    return Promise.reject({ message: 'JWT token provided has expired' });
+  }
 
   return jwtClaims;
 };
 
 export const refreshAuthorizationToken = async (refreshToken: string, options: RefreshAuthOptions): Promise<unknown> => {
-  if (!options.clientID) throw new Error('clientID is empty');
-  if (!options.clientSecret) throw new Error('clientSecret is empty');
+  if (!options.clientID) {
+    return Promise.reject({ message: 'clientID must be provided for refresh token authorization' });
+  }
+
+  if (!options.clientSecret) {
+    return Promise.reject({ message: 'clientSecret must be provided for refresh token authorization' });
+  }
 
   const url = new URL(ENDPOINT_URL);
   url.pathname = '/auth/token';
@@ -59,5 +75,10 @@ export const refreshAuthorizationToken = async (refreshToken: string, options: R
     method: 'POST',
     body
   });
-  return res.json();
+
+  if (res.ok) {
+    return res.json()
+  }
+
+  return Promise.reject(res.json());
 };

@@ -4,6 +4,7 @@ module.exports = {
   preset: 'ts-jest',
   testEnvironment: 'node',
   clearMocks: true,
+  resetMocks: true,
   transformIgnorePatterns: [
     '/node_modules/(!node-fetch)',
   ],

@@ -4,11 +4,11 @@ export const mockPublicKeyResponse: PublicKeysResponse = {
   "keys": [
       {
           "kty": "RSA",
-          "kid": "eXaunmL",
+          "kid": "bolaji",
           "use": "sig",
           "alg": "RS256",
           "n": "4dGQ7bQK8LgILOdLsYzfZjkEAoQeVC_aqyc8GC6RX7dq_KvRAQAWPvkam8VQv4GK5T4ogklEKEvj5ISBamdDNq1n52TpxQwI2EqxSk7I9fKPKhRt4F8-2yETlYvye-2s6NeWJim0KBtOVrk0gWvEDgd6WOqJl_yt5WBISvILNyVg1qAAM8JeX6dRPosahRVDjA52G2X-Tip84wqwyRpUlq2ybzcLh3zyhCitBOebiRWDQfG26EH9lTlJhll-p_Dg8vAXxJLIJ4SNLcqgFeZe4OfHLgdzMvxXZJnPp_VgmkcpUdRotazKZumj6dBPcXI_XID4Z4Z3OM1KrZPJNdUhxw",
-          "e": "AQAB"
+        "e": "AQAB"
       },
       {
           "kty": "RSA",
