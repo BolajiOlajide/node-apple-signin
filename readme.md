@@ -1,6 +1,8 @@
-# [Node.js] Sign in with Apple
+
+# @bolajiolajide/node-apple-signin
 
 Node.JS wrapper around [Sign in with Apple REST API](https://developer.apple.com/documentation/signinwithapplerestapi).
+It provides helper functionality around apple's authentication mechanism for NodeJS.
 
 This module lets you authenticate users using Apple account in your Node.js application.
 
@@ -14,22 +16,30 @@ https://developer.apple.com/sign-in-with-apple/get-started/) related to "Sign in
 
 More detail about configuration can be found in [blog post](https://medium.com/@artyomefremov/add-sign-in-with-apple-button-to-your-website-today-part-1-12ed1444623a?postPublishedType=initial) and [Apple docs](https://help.apple.com/developer-account/#/dev1c0e25352).
 
+
 ## Installation
 
 Install the module using [npm](http://npmjs.com):
 
-```bash
-npm install --save apple-signin
+```sh
+npm install @bolajiolajide/node-apple-signin
 ```
 
-## Usage
+or using [yarn](https://yarnpkg.com)
+
+```sh
+yarn add @bolajiolajide/node-apple-signin
+```
+
+
+## Usage/Examples
 
 ### 1. Get authorization URL
 
 Start "Sign in with Apple" flow by redirecting user to the authorization URL.
 
 ```js
-const appleSignin = require("apple-signin");
+const appleSignin = require("@bolajiolajide/node-apple-signin");
 
 const options = {
     clientID: "com.gotechmakers.auth.client", // identifier of Apple Service ID.
@@ -52,8 +62,7 @@ Alternatively, you can use [Sign In with Apple](https://developer.apple.com/docu
 
 More detail can be found in [Apple docs](https://developer.apple.com/documentation/signinwithapplerestapi/generate_and_validate_tokens).
 
-```javascript
-
+```js
 const clientSecret = appleSignin.getClientSecret({
     clientID: "com.gotechmakers.auth.client", // identifier of Apple Service ID.
     teamId: "teamId", // Apple Developer Team ID.
@@ -119,15 +128,29 @@ appleSignin.refreshAuthorizationToken(refreshToken, options).then(result => {
     console.log(error);
 })
 ```
+## Acknowledgements
 
+- [Techofficer's Implementation](https://github.com/Techofficer/node-apple-signin)
+## Authors
+
+- [@BolajiOlajide](https://www.github.com/BolajiOlajide)
+
+  
 ## Contributing
 
+Contributions are always welcome!  
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
-
 ## License
 
-[The MIT License](https://choosealicense.com/licenses/mit/)
+[MIT](https://choosealicense.com/licenses/mit/)
 
-## Support
+  
+## Running Tests
 
-If you have any questions or need help with integration, then you can create an issue in this repository.
+To run tests, run the following command
+
+```sh
+  npm run test
+```
+
+  
