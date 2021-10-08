@@ -7,6 +7,7 @@ export interface AuthUrlOptions extends BaseAuthorization {
   state?: string;
   response_mode?: string;
   scope?: string;
+  response_type?: string;
 }
 
 export interface AuthTokenOptions extends BaseAuthorization {
