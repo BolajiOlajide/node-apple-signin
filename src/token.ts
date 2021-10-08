@@ -18,7 +18,6 @@ export const getApplePublicKey = async (): Promise<string> => {
     const { keys } = data as PublicKeysResponse;
     const [key] = keys;
 
-    console.log('====>>', NodeRSA);
     const pubKey = new NodeRSA();
     pubKey.importKey({ n: Buffer.from(key.n, 'base64'), e: Buffer.from(key.e, 'base64') }, 'components-public');
     return pubKey.exportKey('public');
