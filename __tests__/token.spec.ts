@@ -1,5 +1,6 @@
 import fetch from 'node-fetch';
 import jwt from 'jsonwebtoken';
+import NodeRSA from 'node-rsa';
 
 import * as TokenService from '../src/token';
 import { ENDPOINT_URL, TOKEN_ISSUER } from '../src/constants';
@@ -8,18 +9,6 @@ import { mockPublicKeyResponse } from './fixtures/key.fixture';
 
 const { Response } = jest.requireActual('node-fetch');
 
-const mockedImportKey = jest.fn().mockName('mocked import key');
-const mockedExportKey = jest.fn().mockName('mocked export key');
-
-jest.mock('node-rsa', () => {
-  return function() {
-    return {
-      importKey: mockedImportKey,
-      exportKey: mockedExportKey
-    };
-  }
-});
-
 describe('token', () => {
   const expectedPublicKey = 'expectedPublicKey';
 
@@ -27,8 +16,13 @@ describe('token', () => {
     const url = new URL(ENDPOINT_URL);
     url.pathname = '/auth/keys';
 
+    beforeEach(() => {
+      (NodeRSA.prototype.importKey as jest.Mock).mockReturnValueOnce(null);
+      (NodeRSA.prototype.exportKey as jest.Mock).mockReturnValueOnce(expectedPublicKey);
+    });
+
     test('returns the generated private key if request is successful', async () => {
-      expect.assertions(2);
+      expect.assertions(6);
       (fetch as jest.MockedFunction<typeof fetch>)
         .mockResolvedValueOnce(
           new Response(
@@ -40,6 +34,19 @@ describe('token', () => {
 
       expect(publicKey).toEqual(expectedPublicKey);
       expect(fetch).toBeCalledTimes(1);
+
+      expect(NodeRSA.prototype.exportKey).toBeCalledTimes(1);
+      expect(NodeRSA.prototype.importKey).toBeCalledTimes(1);
+
+      const [firstKey] = mockPublicKeyResponse.keys;
+      expect(NodeRSA.prototype.exportKey).toBeCalledWith('public');
+      expect(NodeRSA.prototype.importKey).toBeCalledWith(
+        {
+          n: Buffer.from(firstKey.n, 'base64'),
+          e: Buffer.from(firstKey.e, 'base64')
+        },
+        'components-public'
+      );
     });
 
     test('returns a rejected promise if the API call wasn\'t successful', async () => {
