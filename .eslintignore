@@ -1,2 +1,4 @@
 dist/
 node_modules/
+jest.setup.js
+jest.config.js
