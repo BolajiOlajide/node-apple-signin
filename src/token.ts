@@ -18,6 +18,7 @@ export const getApplePublicKey = async (): Promise<string> => {
     const { keys } = data as PublicKeysResponse;
     const [key] = keys;
 
+    console.log('====>>', NodeRSA);
     const pubKey = new NodeRSA();
     pubKey.importKey({ n: Buffer.from(key.n, 'base64'), e: Buffer.from(key.e, 'base64') }, 'components-public');
     return pubKey.exportKey('public');
@@ -80,6 +81,6 @@ export const refreshAuthorizationToken = async (refreshToken: string, options: R
     return res.json()
   }
 
-  const errorMessage = await res.text();
-  return Promise.reject({ message: errorMessage });
+  const errorMessage = await res.json();
+  return Promise.reject(errorMessage);
 };

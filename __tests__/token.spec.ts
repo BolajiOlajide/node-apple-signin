@@ -8,16 +8,20 @@ import { mockPublicKeyResponse } from './fixtures/key.fixture';
 
 const { Response } = jest.requireActual('node-fetch');
 
+const mockedImportKey = jest.fn();
+const mockedExportKey = jest.fn();
+
+jest.mock('node-rsa', () => {
+  return function() {
+    return {
+      importKey: mockedImportKey,
+      exportKey: mockedExportKey
+    };
+  }
+});
+
 describe('token', () => {
-  const expectedPublicKey = `-----BEGIN PUBLIC KEY-----
-MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA4dGQ7bQK8LgILOdLsYzf
-ZjkEAoQeVC/dhdjslajdurw9/KvRAQAWPvkam8VQv4GK5T4ogklEKEvj5ISBamdD
-Nq1n52TpxQwI2EqxSk7I9fKPKhRt4F8+2yETlYvye+2s6NeWJim0KBtOVrk0gWvE
-Dgd6WOqJl/yt5WBISvILNyVg1qAAM8JeX6dRPosahRVDjA52G2X+Tip84wqwyRpU
-lq2ybzcLh3zyhCitBOebiRWDQfG26EH9lTlJhll+p/Dg8vAXxJLIJ4SNLcqgFeZe
-4OfHLgdzMvxXZJnPp/VgmkcpUdRotazKZumj6dBPcXI/XID4Z4Z3OM1KrZPJNdUh
-xwIDAQAB
------END PUBLIC KEY-----`;
+  const expectedPublicKey = 'expectedPublicKey';
 
   describe('getApplePublicKey', () => {
     const url = new URL(ENDPOINT_URL);
