@@ -10,7 +10,8 @@
     "declaration": true,
     "rootDir": "./src",
     "sourceMap": false,
+    "moduleResolution": "node"
   },
-  "include": ["src"],
-  "exclude": ["node_modules", "**/__tests__/*"]
+  "include": ["src", "@types/*.d.ts"],
+  "exclude": ["node_modules", "**/__tests__/*", "dist"]
 }

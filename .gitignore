@@ -88,3 +88,5 @@ typings/
 .dynamodb/
 source
 dist/
+sample.js
+sample.ts
