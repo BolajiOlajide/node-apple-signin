@@ -5,6 +5,7 @@
   "scripts": {
     "build": "rm -rf dist && tsc",
     "test": "jest",
+    "test:watch": "jest --watch",
     "prepare": "yarn build",
     "prepublishOnly": "yarn test && yarn lint",
     "lint": "eslint ."
