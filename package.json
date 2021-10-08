@@ -9,7 +9,8 @@
     "test:watch": "jest --watch",
     "prepare": "yarn build",
     "prepublishOnly": "yarn test && yarn lint",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "ppublish": "npm publish --access public"
   },
   "homepage": "https://github.com/BolajiOlajide/node-apple-signin",
   "keywords": [
