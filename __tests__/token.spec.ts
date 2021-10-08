@@ -8,8 +8,8 @@ import { mockPublicKeyResponse } from './fixtures/key.fixture';
 
 const { Response } = jest.requireActual('node-fetch');
 
-const mockedImportKey = jest.fn();
-const mockedExportKey = jest.fn();
+const mockedImportKey = jest.fn().mockName('mocked import key');
+const mockedExportKey = jest.fn().mockName('mocked export key');
 
 jest.mock('node-rsa', () => {
   return function() {
