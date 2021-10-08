@@ -1,4 +1,9 @@
+import fetch from 'node-fetch';
+
 import * as AuthorizationService from '../src/authorization';
+
+
+const { Response } = jest.requireActual('node-fetch');
 
 describe('authorization', () => {
   describe('getAuthorizationUrl', () => {
@@ -58,6 +63,112 @@ describe('authorization', () => {
       });
 
       expect(url).toEqual('https://appleid.apple.com/auth/authorize?response_type=code&state=state&client_id=CHD3280DS&redirect_uri=http%3A%2F%2Fexample.com&response_mode=form_post');
+    });
+  });
+
+  describe('getAuthorizationToken', () => {
+    const code = 'randomCode';
+    const authTokenOptions = {
+      clientID: 'anotherClientID',
+      clientSecret: 'anotherClientSecret',
+      redirectUri: 'http://example.com'
+    };
+
+    test('returns a promise rejection if clientID is falsy', async () => {
+      await expect(AuthorizationService.getAuthorizationToken(code, {
+        clientID: '',
+        clientSecret: '',
+        redirectUri: ''
+      }))
+        .rejects
+        .toEqual({ message: 'clientID is empty' });
+    });
+
+    test('returns a promise rejection if redirectUri is falsy', async () => {
+      await expect(AuthorizationService.getAuthorizationToken(code, {
+        clientID: 'CJDSDL',
+        clientSecret: '',
+        redirectUri: ''
+      }))
+        .rejects
+        .toEqual({ message: 'redirectUri is empty' });
+    });
+
+    test('returns a promise rejection if clientSecret is falsy', async () => {
+      await expect(AuthorizationService.getAuthorizationToken(code, {
+        clientID: 'CJDSDL',
+        clientSecret: '',
+        redirectUri: 'http://example.com'
+      }))
+        .rejects
+        .toEqual({ message: 'clientSecret is empty' });
+    });
+
+    test('returns the token received from Apple\'s auth service', async () => {
+      (fetch as jest.MockedFunction<typeof fetch>)
+        .mockResolvedValueOnce(
+          new Response(
+            JSON.stringify({
+              token: 'newToken'
+            })
+          )
+        );
+
+      const token = await AuthorizationService.getAuthorizationToken(code, authTokenOptions);
+
+      expect(token).toEqual({ token: 'newToken' });
+
+      expect(fetch).toBeCalledTimes(1);
+      expect(fetch).toBeCalledWith(
+        'https://appleid.apple.com/auth/token',
+        {
+          method: 'POST',
+          body: JSON.stringify({
+            client_id: authTokenOptions.clientID,
+            client_secret: authTokenOptions.clientSecret,
+            code,
+            grant_type: 'authorization_code',
+            redirect_uri: authTokenOptions.redirectUri,
+          }),
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+          }
+        }
+      )
+    });
+
+    test('returns the error message from Apple when an error occurs', async () => {
+      (fetch as jest.MockedFunction<typeof fetch>)
+        .mockResolvedValueOnce(
+          new Response(
+            JSON.stringify({
+              error: 'The code provided has expired'
+            }),
+            { status: 401 }
+          )
+        );
+
+      await expect(AuthorizationService.getAuthorizationToken(code, authTokenOptions))
+        .rejects
+        .toEqual({ error: 'The code provided has expired' });
+
+      expect(fetch).toBeCalledTimes(1);
+      expect(fetch).toBeCalledWith(
+        'https://appleid.apple.com/auth/token',
+        {
+          method: 'POST',
+          body: JSON.stringify({
+            client_id: authTokenOptions.clientID,
+            client_secret: authTokenOptions.clientSecret,
+            code,
+            grant_type: 'authorization_code',
+            redirect_uri: authTokenOptions.redirectUri,
+          }),
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+          }
+        }
+      )
     });
   });
 });

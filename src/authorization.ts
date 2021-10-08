@@ -27,9 +27,17 @@ export const getAuthorizationUrl = (options: AuthUrlOptions): string => {
 };
 
 export const getAuthorizationToken = async (code: string, options: AuthTokenOptions): Promise<unknown> => {
-  if (!options.clientID) throw new Error('clientID is empty');
-  if (!options.redirectUri) throw new Error('redirectUri is empty');
-  if (!options.clientSecret) throw new Error('clientSecret is empty');
+  if (!options.clientID) {
+    return Promise.reject({ message: 'clientID is empty' });
+  }
+
+  if (!options.redirectUri) {
+    return Promise.reject({ message: 'redirectUri is empty' });
+  }
+
+  if (!options.clientSecret) {
+    return Promise.reject({ message: 'clientSecret is empty' });
+  }
 
   const url = new URL(ENDPOINT_URL);
   url.pathname = '/auth/token';
@@ -49,5 +57,11 @@ export const getAuthorizationToken = async (code: string, options: AuthTokenOpti
       'Content-Type': 'application/x-www-form-urlencoded'
     }
   });
-  return res.json();
+
+  if (res.ok) {
+    return res.json();
+  }
+
+  const errorMessage = await res.json();
+  return Promise.reject(errorMessage);
 };
