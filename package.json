@@ -1,16 +1,17 @@
 {
   "name": "@bolajiolajide/node-apple-signin",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Node.JS wrapper around Sign In with Apple REST API",
   "scripts": {
     "prepublish": "yarn build",
-    "build": "rm -rf dist && tsc",
+    "build": "yarn clean && tsc -p tsconfig.json && tsc -p tsconfig-cjs.json",
     "test": "jest",
     "test:watch": "jest --watch",
     "prepare": "yarn build",
-    "prepublishOnly": "yarn test && yarn lint",
+    "prepublishOnly": "yarn test && yarn lint && yarn build",
     "lint": "eslint .",
-    "ppublish": "npm publish --access public"
+    "ppublish": "npm publish --access public",
+    "clean": "rm -rf dist/"
   },
   "homepage": "https://github.com/BolajiOlajide/node-apple-signin",
   "keywords": [
@@ -40,8 +41,8 @@
     "node-fetch": "2.6.1",
     "node-rsa": "1.0.5"
   },
-  "main": "dist/index.js",
-  "types": "./dist/index.d.ts",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
   "devDependencies": {
     "@babel/core": "^7.15.5",
     "@babel/preset-env": "^7.15.6",

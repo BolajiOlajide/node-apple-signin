@@ -1,17 +1,17 @@
 {
   "compilerOptions": {
-    "target": "es5",                                     /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */
-    "module": "commonjs",                                /* Specify what module code is generated. */
-    "esModuleInterop": true,                             /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables `allowSyntheticDefaultImports` for type compatibility. */
-    "forceConsistentCasingInFileNames": true,            /* Ensure that casing is correct in imports. */
-    "strict": true,                                      /* Enable all strict type-checking options. */
-    "skipLibCheck": true                                 /* Skip type checking all .d.ts files. */,
-    "outDir": "./dist",
-    "declaration": true,
+    "skipLibCheck": true,
     "rootDir": "./src",
     "sourceMap": false,
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "target": "ES2015",
+    "module": "ES2020",
+    "strict": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "outDir": "./dist/esm",
+    "declaration": true
   },
-  "include": ["src", "@types/*.d.ts"],
+  "include": ["./src", "./@types"],
   "exclude": ["node_modules", "**/__tests__/*", "dist"]
 }
