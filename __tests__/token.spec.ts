@@ -1,6 +1,7 @@
 import fetch from 'node-fetch';
 import jwt from 'jsonwebtoken';
 import NodeRSA from 'node-rsa';
+import { URL } from 'url';
 
 import * as TokenService from '../src/token';
 import { ENDPOINT_URL, TOKEN_ISSUER } from '../src/constants';
