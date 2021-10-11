@@ -1,6 +1,6 @@
 {
   "name": "@bolajiolajide/node-apple-signin",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Node.JS wrapper around Sign In with Apple REST API",
   "scripts": {
     "build": "tsc -p tsconfig.json",
@@ -62,6 +62,7 @@
   },
   "files": [
     "dist/",
+    "@types/",
     "readme.md",
     "yarn.lock",
     "package.json",
